@@ -2,7 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'card-manager',
+    loadChildren: () => import('./card-manager/card-manager.module')
+      .then(m => m.CardManagerModule)
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
