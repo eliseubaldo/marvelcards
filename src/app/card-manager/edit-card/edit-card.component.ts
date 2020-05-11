@@ -50,9 +50,11 @@ export class EditCardComponent implements OnInit {
   }
 
   generateGroupAffiliations(): void {
-    const affiliationValues = this.form.get('affiliation').value;
-    
-    this.affiliationsArray = affiliationValues.split(',');
+    const affiliationValues = this.form.get('affiliation').value.split(',');
+    this.affiliationsArray = affiliationValues.map( value => {
+      return { 'name': value, 'selected': true }
+    });
+    console.log(this.affiliationsArray)
   }
 
   addGroup(value: string): void {
@@ -73,6 +75,7 @@ export class EditCardComponent implements OnInit {
 
   seeform() {
     console.log(this.form);
+    console.log(this.affiliationsArray);
   }
 
 }

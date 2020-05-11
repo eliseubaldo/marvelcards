@@ -95,8 +95,8 @@
                 <legend class="col-form-label col-sm-2 pt-0">Group Affiliations: </legend>
                 <div class="col-sm-4">
                   <div class="form-check form-check-inline" *ngFor="let group of affiliationsArray; index as i">
-                    <input class="form-check-input" type="checkbox" [(ngModel)]="i" [ngModelOptions]="{standalone: true}" value="{{group}}" checked>
-                    <label class="form-check-label" for="{{i}}">{{group}}</label>
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="group.selected" [ngModelOptions]="{standalone: true}" [value]="group.name" [checked]="group.selected">
+                    <label class="form-check-label" for="{{group.name}}">{{group.name}} - {{group.selected}}</label>
                   </div>
                 </div>
                 <div class="col-sm-4">
