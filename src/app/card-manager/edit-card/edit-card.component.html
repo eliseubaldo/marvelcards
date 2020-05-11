@@ -96,11 +96,11 @@
                 <div class="col-sm-4">
                   <div class="form-check form-check-inline" *ngFor="let group of affiliationsArray; index as i">
                     <input class="form-check-input" type="checkbox" [(ngModel)]="group.selected" [ngModelOptions]="{standalone: true}" [value]="group.name" [checked]="group.selected">
-                    <label class="form-check-label" for="{{group.name}}">{{group.name}} - {{group.selected}}</label>
+                    <label class="form-check-label" for="{{group.name}}">{{group.name}}</label>
                   </div>
                 </div>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" [(ngModel)]="extraGroup" [ngModelOptions]="{standalone: true}" placeholder="Add">
+                  <input type="text" class="form-control" [(ngModel)]="extraGroup" [ngModelOptions]="{standalone: true}" placeholder="Add group name">
                 </div>
                 <div class="col-sm-2 pt-0">
                   <button class="btn btn-outline-info" (click)="addGroup(extraGroup)">&#10010;</button> </div>

@@ -58,7 +58,7 @@ export class EditCardComponent implements OnInit {
   }
 
   addGroup(value: string): void {
-    this.affiliationsArray.push(value);
+    this.affiliationsArray.push({ 'name': value, 'selected': true });
     this.extraGroup = ''; 
   }
 
