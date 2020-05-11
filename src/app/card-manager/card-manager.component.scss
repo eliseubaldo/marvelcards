@@ -1,0 +1,23 @@
+.card-manager {
+
+    .nav-tabs {
+        border-bottom: 2px solid black;;
+    }
+
+    .nav-tabs .nav-item {
+        margin-bottom: -2px;
+    }
+
+    .nav-link {
+        border-width: 2px;
+        color: #495057;
+        background-color: #dee2e6;
+        border-color: black black;
+        border-bottom: none;
+    }
+    .nav-link.active {
+        color: #495057;
+        background-color: #fff;
+        border-color: black black;
+    }
+}

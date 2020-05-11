@@ -8,4 +8,5 @@ export interface MarvelCard {
     affiliation: string;
     imagefront: string;
     imageback: string;
+    _id: string;
 }

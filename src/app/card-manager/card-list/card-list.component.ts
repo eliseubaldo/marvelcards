@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CardsService } from '../services/cards.service';
+import { CardsListService } from '../services/cards-list.service';
 import { MarvelCard } from 'src/app/models/marvelcard.interface';
 
 @Component({
@@ -9,12 +9,12 @@ import { MarvelCard } from 'src/app/models/marvelcard.interface';
 })
 export class CardListComponent implements OnInit {
   cardList: MarvelCard[];
-  constructor(private readonly cardService: CardsService) {
+  constructor(private readonly cardService: CardsListService) {
   }
 
   ngOnInit() {
     this.cardService.getCardList().subscribe({
-      next: data => this.cardList = data,
+      next: data => {this.cardList = data; console.log(data)},
       error: error => console.log('error', error),
       complete: ()=> console.log()
     });

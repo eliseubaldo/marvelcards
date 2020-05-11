@@ -2,12 +2,14 @@
     <div class="col-12">
         <div class="page-white">
             <div class="card-list">
+                <table class="table table-sm">
 
-                <ul>
-                    <li *ngFor="let card of cardList">
-                        {{card.name}}
-                    </li>
-                </ul>
+                    <tr *ngFor="let card of cardList">
+                        <td>
+                            <a routerLink="../card/{{card._id}}">{{card.name}}</a>
+                        </td>
+                    </tr>
+                    </table>
             </div>
 
         </div>  
