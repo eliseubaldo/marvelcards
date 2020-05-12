@@ -12,10 +12,11 @@ import { MarvelCard } from 'src/app/models/marvelcard.interface';
 })
 export class ViewCardComponent implements OnInit {
   card$: MarvelCard;
+  loading = true;
   constructor(private route: ActivatedRoute, viewCardService: ViewCardService) { 
     const id = this.route.snapshot.params['id'];
     viewCardService.getCard(id).subscribe({
-      next: data => this.card$ = data,
+      next: data => {this.card$ = data; this.loading = false;},
       error: error => console.log(error),
       complete: ()=> console.log('completed')
     })

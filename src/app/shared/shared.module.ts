@@ -4,11 +4,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdRatingEvents } from './components/rating-input/rating-input.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, NgbdRatingEvents],
+  declarations: [HeaderComponent, NgbdRatingEvents, SpinnerComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -16,7 +17,8 @@ import { NgbdRatingEvents } from './components/rating-input/rating-input.compone
   ],
   exports: [
     HeaderComponent,
-    NgbdRatingEvents
+    NgbdRatingEvents,
+    SpinnerComponent
   ]
 })
 export class SharedModule { }

@@ -7,11 +7,12 @@ import { ViewCardComponent } from './view-card/view-card.component';
 import { EditCardComponent } from './edit-card/edit-card.component';
 import { SharedModule } from '../shared/shared.module'; 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AddCardComponent } from './add-card/add-card.component';
 
 
 
 @NgModule({
-  declarations: [CardManagerComponent, CardListComponent, ViewCardComponent, EditCardComponent],
+  declarations: [CardManagerComponent, CardListComponent, ViewCardComponent, EditCardComponent, AddCardComponent],
   imports: [
     CommonModule,
     CardManagerRoutingModule,

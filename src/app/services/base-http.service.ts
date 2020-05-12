@@ -10,10 +10,34 @@ export abstract class BaseHttpService {
 
   constructor( protected readonly httpClient: HttpClient ) { }
 
-  public get<TResult>(url: string, params?: any): Observable<TResult> {
+  protected get<TResult>(url: string, params?: any): Observable<TResult> {
     return this.httpClient
       .get<TResult>(this.baseURL+url, {headers: this.headers})
   }
+
+  protected put<TResult>(
+    url: string,
+    params: any,
+    options?: {headers: HttpHeaders}): Observable<TResult> {
+    return this.httpClient
+      .put<TResult>(this.baseURL+url, params, {headers: this.headers})
+      
+  }
+
+  protected post<TResult>(
+    params: any,
+    options?: {headers: HttpHeaders}): Observable<TResult> {
+    return this.httpClient
+      .post<TResult>(this.baseURL, params, {headers: this.headers})
+  }
+
+  protected delete<TResult>(
+    url: string,
+    options?: {headers: HttpHeaders}): Observable<TResult> {
+    return this.httpClient
+      .post<TResult>(this.baseURL+url, {headers: this.headers})
+  }
+
 
 
   // getHeroes() {

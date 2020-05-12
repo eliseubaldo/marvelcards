@@ -10,3 +10,8 @@ body {
     border-right: 2px solid black;
     border-bottom: 2px solid black;
 }
+
+// Form Validation
+.form-control.ng-dirty.ng-invalid {
+   border-color: #dc3545;
+}

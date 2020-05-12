@@ -17,7 +17,7 @@
               <label for="defense">Defense:</label>&nbsp;<ngbd-rating-events formControlName="defense"></ngbd-rating-events>
             </div>
             <div class="form-group">
-              <label for="matches">Card Combinations</label>
+              <label for="matches">Card Matches</label>
               <input type="text" class="form-control" formControlName="combines">
             </div>
 
@@ -115,14 +115,12 @@
                     <div class="form-group">
                         <label for="picture">Card Image Front:</label>
                         <input type="text" class="form-control" formControlName="imagefront">
-                        <img *ngIf="this.pageMode === 'edit-card'" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.value.imagefront" alt=""><br>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                         <label for="picture">Card Image Back:</label>
                         <input type="text" class="form-control" formControlName="imageback">
-                        <img *ngIf="this.pageMode === 'edit-card'" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.value.imageback" alt=""><br>
                     </div>
                   </div>
               </div>

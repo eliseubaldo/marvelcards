@@ -17,6 +17,7 @@ import {
 import {
   EditCardComponent
 } from './edit-card/edit-card.component';
+import { AddCardComponent } from './add-card/add-card.component';
 
 
 const routes: Routes = [{
@@ -31,6 +32,11 @@ const routes: Routes = [{
       path: 'card-list',
       pathMatch: 'full',
       component: CardListComponent,
+    },
+    {
+      path: 'add-card',
+      pathMatch: 'full',
+      component: EditCardComponent,
     },
     {
       path: 'card/:id',

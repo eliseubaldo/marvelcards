@@ -1,0 +1,41 @@
+
+
+@keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+  
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+.loadingSpinner {
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+
+    &-spinner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 150px;
+        height: 150px;
+        animation: spin 2s linear infinite;
+        background-image: url('/assets/images/vsp_loader_blue.svg');
+        background-repeat: no-repeat;
+    }
+
+    &-message {
+        position: relative;
+        font-size: 18px;
+        margin: 0;
+    }
+}
+

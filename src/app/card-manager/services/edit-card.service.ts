@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
 import { BaseHttpService } from 'src/app/services/base-http.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MarvelCard } from 'src/app/models/marvelcard.interface';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CardsListService extends BaseHttpService {
+export class EditCardService extends BaseHttpService {
 
+  
   constructor(httpClient: HttpClient ) {
     super(httpClient);
   }
 
 
-  public getCardList(): Observable<any> {
-    return super.get('');
+  public updateCard(id: string, payload: MarvelCard): Observable<MarvelCard> {
+    return super.put(`/${id}`, payload);
   }
-
-  
 }
