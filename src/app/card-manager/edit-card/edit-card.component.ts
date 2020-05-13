@@ -6,6 +6,7 @@ import { ViewCardService } from '../services/view-card.service';
 import { MarvelCard } from 'src/app/models/marvelcard.interface';
 import { EditCardService } from '../services/edit-card.service';
 import { AddCardService } from '../services/add-card.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-edit-card',
@@ -26,6 +27,7 @@ export class EditCardComponent implements OnInit {
     private viewCardService: ViewCardService,
     private editCardService: EditCardService,
     private addCardService: AddCardService,
+    public toastService: ToastService
     ) {
     const id = this.route.snapshot.params['id'];
     this.route.url.subscribe({
@@ -105,6 +107,7 @@ export class EditCardComponent implements OnInit {
       if (this.pageMode === 'edit-card') {
         this.editCardService.updateCard(this.form.value._id, this.form.value).subscribe({
           next: data => {
+            this.showSuccessToast();
             console.log('finished:', data);
             this.loading = false;
           },
@@ -114,6 +117,7 @@ export class EditCardComponent implements OnInit {
       } else {
           this.addCardService.addCard(this.form.value).subscribe({
             next: data => {
+              this.showSuccessToast();
               console.log('finished:', data);
               this.loading = false;
             },
@@ -125,6 +129,10 @@ export class EditCardComponent implements OnInit {
     } else {
       this.form.updateValueAndValidity();
     }
+  }
+
+  showSuccessToast() {
+    this.toastService.show('Card Saved', { classname: 'bg-success text-light', delay: 5000 });
   }
 
   seeform() {

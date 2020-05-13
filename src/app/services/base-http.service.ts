@@ -5,7 +5,10 @@ import { Observable } from 'rxjs';
 @Injectable()
 export abstract class BaseHttpService {
 
-  headers = new HttpHeaders().set('x-apikey', '5c3f94b966292476821ca01e');
+  headers = new HttpHeaders({
+    'x-apikey': '5c3f94b966292476821ca01e',
+    'content-type': 'application/json',
+  });
   baseURL = 'https://marvelheroes-1d22.restdb.io/rest/marvelcards';
 
   constructor( protected readonly httpClient: HttpClient ) { }
@@ -35,7 +38,7 @@ export abstract class BaseHttpService {
     url: string,
     options?: {headers: HttpHeaders}): Observable<TResult> {
     return this.httpClient
-      .post<TResult>(this.baseURL+url, {headers: this.headers})
+      .delete<TResult>(this.baseURL+url, {headers: this.headers})
   }
 
 

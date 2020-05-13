@@ -5,11 +5,13 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdRatingEvents } from './components/rating-input/rating-input.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
+import { ToastsComponent } from './components/toasts/toasts.component';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, NgbdRatingEvents, SpinnerComponent],
+  declarations: [HeaderComponent, NgbdRatingEvents, SpinnerComponent, ConfirmationModalComponent, ToastsComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -18,7 +20,11 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
   exports: [
     HeaderComponent,
     NgbdRatingEvents,
-    SpinnerComponent
+    SpinnerComponent,
+    ToastsComponent
+  ],
+  entryComponents: [
+    ConfirmationModalComponent
   ]
 })
 export class SharedModule { }
