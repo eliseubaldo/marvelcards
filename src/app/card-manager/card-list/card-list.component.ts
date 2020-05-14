@@ -52,7 +52,7 @@ export class CardListComponent implements OnInit {
   }
 
   showSuccessToast() {
-    this.toastService.show('Card was deleted', { classname: 'bg-success text-light', delay: 5000 });
+    this.toastService.show('Card was deleted', { classname: 'toast-comics', delay: 5000 });
   }
 
   public openConfirmDeleteModal(cardId: string) {

@@ -7,24 +7,29 @@ import { NgbdRatingEvents } from './components/rating-input/rating-input.compone
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { ToastsComponent } from './components/toasts/toasts.component';
+import { CombineCardsModalComponent } from './components/combine-cards-modal/combine-cards-modal.component';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, NgbdRatingEvents, SpinnerComponent, ConfirmationModalComponent, ToastsComponent],
+  declarations: [HeaderComponent, NgbdRatingEvents, SpinnerComponent, ConfirmationModalComponent, ToastsComponent, CombineCardsModalComponent],
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   exports: [
     HeaderComponent,
     NgbdRatingEvents,
     SpinnerComponent,
-    ToastsComponent
+    ToastsComponent,
+
   ],
   entryComponents: [
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    CombineCardsModalComponent
   ]
 })
 export class SharedModule { }

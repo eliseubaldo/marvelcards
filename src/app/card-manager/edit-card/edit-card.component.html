@@ -2,13 +2,13 @@
   <div class="col-12">
     <div class="page-white">
       <app-spinner message='Loading' *ngIf="loading"></app-spinner>
-      <form [formGroup]="form" *ngIf="!loading">
+      <form [formGroup]="form" *ngIf="!loading" (submit)="submitForm()" novalidate #editform="ngForm" [ngClass]="{'submitted': editform.submitted}">
         <div class="row">
           <div class="col-6">
 
             <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" class="form-control" formControlName="name">
+              <input type="text" class="form-control" formControlName="name" >
             </div>
             <div class="form-group">
               <label for="attack">Attack:</label>&nbsp;<ngbd-rating-events formControlName="attack"></ngbd-rating-events>
@@ -17,9 +17,27 @@
               <label for="defense">Defense:</label>&nbsp;<ngbd-rating-events formControlName="defense"></ngbd-rating-events>
             </div>
             <div class="form-group">
-              <label for="matches">Card Combinations</label>
-              <input type="text" class="form-control" formControlName="combines">
+              <div class="row">
+                <div class="col-6">
+                  <label for="matches">Card Combinations</label>
+                  <textarea class="form-control" formControlName="combines"></textarea>
+                </div>
+
+                <div class="col-6">
+                    <div class="row">
+                      <div class="col">
+                        <button type="button" class="btn btn-sm btn-outline-info mt-4" (click)="openCombineModal()">Add cards</button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <button type="button" class="btn btn-sm btn-outline-info mt-2" (click)="removeCombineCards()">Remove cards</button>
+                      </div>
+                    </div>
+                </div>
+              </div>
             </div>
+        
 
             <fieldset class="form-group">
                 <div class="row">
@@ -55,6 +73,7 @@
                             Equipment
                         </label>
                       </div>
+                      <p *ngIf="form.get('cardtype').hasError('required') && editform.submitted">* Card Type is required</p>
                   </div>
                 </div>
               </fieldset>
@@ -104,7 +123,7 @@
                   <input type="text" class="form-control" [(ngModel)]="extraGroup" [ngModelOptions]="{standalone: true}" placeholder="Add group name">
                 </div>
                 <div class="col-sm-2 pt-0">
-                  <button class="btn btn-outline-info" (click)="addGroup(extraGroup)">&#10010;</button> </div>
+                  <button type="button" class="btn btn-outline-info" (click)="addGroup(extraGroup)">&#10010;</button> </div>
               </div>
             </fieldset>
 
@@ -115,14 +134,14 @@
                     <div class="form-group">
                         <label for="picture">Card Image Front:</label>
                         <input type="text" class="form-control" formControlName="imagefront">
-                        <img *ngIf="this.pageMode === 'edit-card'" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.value.imagefront" alt=""><br>
+                        <img class="mt-3" *ngIf="this.pageMode === 'edit-card'" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.value.imagefront" alt=""><br>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                         <label for="picture">Card Image Back:</label>
                         <input type="text" class="form-control" formControlName="imageback">
-                        <img *ngIf="this.pageMode === 'edit-card'" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.value.imageback" alt=""><br>
+                        <img class="mt-3" *ngIf="this.pageMode === 'edit-card'" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.value.imageback" alt=""><br>
                     </div>
                   </div>
               </div>
@@ -132,7 +151,7 @@
           <div class="col-12">
             <a class="btn btn-primary">Save</a>
             <a class="btn btn-primary ml-1" (click)="seeform()">see form</a>
-            <a class="btn btn-primary ml-1" (click)="submitForm()">submit</a>
+            <button type="submit" class="btn btn-primary ml-1">submit</button>
           </div>
         </div>
       </form>

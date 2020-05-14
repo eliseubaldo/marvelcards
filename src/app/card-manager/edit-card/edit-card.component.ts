@@ -7,6 +7,8 @@ import { MarvelCard } from 'src/app/models/marvelcard.interface';
 import { EditCardService } from '../services/edit-card.service';
 import { AddCardService } from '../services/add-card.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CombineCardsModalComponent } from 'src/app/shared/components/combine-cards-modal/combine-cards-modal.component';
 
 @Component({
   selector: 'app-edit-card',
@@ -20,6 +22,7 @@ export class EditCardComponent implements OnInit {
  public affiliationsArray = [];
  public extraGroup: string;
  public pageMode: string;
+ private modalRef: NgbModalRef;
 
   constructor(
     private fb: FormBuilder,
@@ -27,7 +30,8 @@ export class EditCardComponent implements OnInit {
     private viewCardService: ViewCardService,
     private editCardService: EditCardService,
     private addCardService: AddCardService,
-    public toastService: ToastService
+    public toastService: ToastService,
+    private readonly modalService: NgbModal,
     ) {
     const id = this.route.snapshot.params['id'];
     this.route.url.subscribe({
@@ -71,6 +75,7 @@ export class EditCardComponent implements OnInit {
     this.form.get('alignment').setValidators(Validators.required);
     this.form.get('imagefront').setValidators(Validators.required);
     this.form.get('imageback').setValidators(Validators.required);
+    this.form.get('combines').disable();
   }
 
   generateGroupAffiliations(): void {
@@ -127,12 +132,31 @@ export class EditCardComponent implements OnInit {
       }
       
     } else {
-      this.form.updateValueAndValidity();
+      this.form.markAllAsTouched();
     }
   }
 
-  showSuccessToast() {
+  showSuccessToast(): void {
     this.toastService.show('Card Saved', { classname: 'bg-success text-light', delay: 5000 });
+  }
+
+
+  openCombineModal(): void {
+    this.modalRef = this.modalService.open(CombineCardsModalComponent, {size: 'xl'});
+    this.modalRef.componentInstance.combineWithCard = this.form.get('name').value;
+    this.modalRef.componentInstance.selectedCards.subscribe((cards) => this.appendCombineCards(cards) );
+  }
+
+  appendCombineCards(cards: string): void {
+    this.form.patchValue({
+      combines: cards
+    })
+  }
+
+  removeCombineCards(): void {
+    this.form.patchValue({
+      combines: null
+    })
   }
 
   seeform() {

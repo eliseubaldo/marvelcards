@@ -12,6 +12,9 @@ body {
 }
 
 // Form Validation
-.form-control.ng-dirty.ng-invalid {
-   border-color: #dc3545;
+
+form.submitted {
+    .form-control.ng-touched.ng-invalid {
+       border-color: #dc3545;
+    }
 }
