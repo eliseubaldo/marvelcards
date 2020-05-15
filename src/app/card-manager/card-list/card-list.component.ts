@@ -14,13 +14,18 @@ import { ToastService } from 'src/app/services/toast.service';
 export class CardListComponent implements OnInit {
   cardList: MarvelCard[];
   loading = true;
-  private modalRef: NgbModalRef
+  cardTotal: number;
+  cardsPerPage: number = 10;
+  currentPage: number = 0;
+  private modalRef: NgbModalRef;
+
   constructor(
     private readonly cardService: CardsListService, 
     private deleteCardService: DeleteCardService,
     private readonly modalService: NgbModal,
     public toastService: ToastService
     ) {
+    // this.getCardCount();
     this.loadCardsList();
   }
 
@@ -29,10 +34,13 @@ export class CardListComponent implements OnInit {
   }
 
   loadCardsList(): void {
-    this.cardService.getCardList().subscribe({
+    this.cardService.getPaginatedCardList(this.cardsPerPage, this.currentPage).subscribe({
       next: data => {
-        this.cardList = data; 
-        this.loading = false; 
+        console.log('paginated: ',data);
+        this.cardList = data.data;
+        this.cardTotal = data.totals.total;
+        this.currentPage += this.cardsPerPage;
+        this.loading = false;
         console.log(this.cardList)},
       error: error => console.log('error', error),
       complete: ()=> console.log()
@@ -49,6 +57,13 @@ export class CardListComponent implements OnInit {
         error: error => console.log('error', error),
         complete: ()=> console.log('complete')
       });
+  }
+
+  setCardsPerPage(amount: number): void {
+    this.cardsPerPage = amount;
+    this.currentPage = 0;
+    this.loading = true;
+    this.loadCardsList();
   }
 
   showSuccessToast() {

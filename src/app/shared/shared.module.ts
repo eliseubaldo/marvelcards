@@ -9,11 +9,12 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
 import { ToastsComponent } from './components/toasts/toasts.component';
 import { CombineCardsModalComponent } from './components/combine-cards-modal/combine-cards-modal.component';
 import { FormsModule } from '@angular/forms';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, NgbdRatingEvents, SpinnerComponent, ConfirmationModalComponent, ToastsComponent, CombineCardsModalComponent],
+  declarations: [HeaderComponent, NgbdRatingEvents, SpinnerComponent, ConfirmationModalComponent, ToastsComponent, CombineCardsModalComponent, PaginationComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     NgbdRatingEvents,
     SpinnerComponent,
     ToastsComponent,
+    PaginationComponent
 
   ],
   entryComponents: [

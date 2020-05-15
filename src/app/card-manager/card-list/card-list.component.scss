@@ -1,0 +1,17 @@
+.card-list {
+    .nav-pills .nav-link{
+        cursor: pointer;
+    }
+
+    &__nav {
+        .nav-label {
+            display: block;
+           padding: 0.5rem 1rem;
+        }
+    }
+
+    &__nav-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

@@ -18,5 +18,13 @@ export class CardsListService extends BaseHttpService {
     return super.get('');
   }
 
+  public getPaginatedCardList(cardsPerPage, currentPage): Observable<any> {
+    return super.get(`?totals=true&skip=${currentPage}&max=${cardsPerPage}`);
+  }
+
+  public getCardTotal(): Observable<any> {
+    return super.get('?totals=true&count=true');
+  }
+
   
 }

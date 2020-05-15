@@ -46,6 +46,7 @@ export abstract class BaseHttpService {
   // getHeroes() {
   //   return this.http.get('https://marvelheroes-1d22.restdb.io/rest/heroes', {headers: this.headers});
   //   // return this.http.get('https://marvelheroes-1d22.restdb.io/rest/heroes?skip=10&max=10', {headers: this.headers});
+  // https://marvelheroes-1d22.restdb.io/rest/marvelcards?totals=true&count=true
   // }
 
   
