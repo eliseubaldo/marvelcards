@@ -23,6 +23,9 @@ export class EditCardComponent implements OnInit {
  public extraGroup: string;
  public pageMode: string;
  private modalRef: NgbModalRef;
+ public fileData: File[] = [];
+ public previewCardFrontImage: any = null;
+ public previewCardBackImage: any = null;
 
   constructor(
     private fb: FormBuilder,
@@ -163,6 +166,46 @@ export class EditCardComponent implements OnInit {
     console.log(this.form);
     console.log(this.affiliationsArray);
     this.setGroupAffiliations();
+  }
+
+  fileProgress(fileInput: any, cardSide: string): void {
+    switch (cardSide) {
+      case 'front':
+        this.fileData[0] = <File>fileInput.target.files[0];
+        console.log('filedata: ',this.fileData);
+         this.previewImage(this.fileData[0], cardSide);
+        break;
+      case 'back':
+        this.fileData[1] = <File>fileInput.target.files[0];
+        console.log('filedata: ',this.fileData);
+         this.previewImage(this.fileData[1], cardSide);
+        break;
+      default:
+        break;
+    } 
+  }
+
+  previewImage(file: File, cardSide: string) {
+    // Show preview 
+    var mimeType = file.type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+ 
+    var reader = new FileReader();      
+    reader.readAsDataURL(file); 
+    reader.onload = (_event) => {
+      switch (cardSide) {
+        case 'front':
+          this.previewCardFrontImage = reader.result; 
+          break;
+        case 'back':
+          this.previewCardBackImage = reader.result; 
+          break;
+        default:
+          break;
+      } 
+    }
   }
 
 }
