@@ -39,3 +39,14 @@
     }
 }
 
+.loadingSpinner.overContent {
+  position: absolute;
+  height: 100%;
+  z-index: 1000;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba($color: #ffffff, $alpha: .8);
+
+}
+
