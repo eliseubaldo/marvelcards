@@ -79,13 +79,18 @@ export class EditCardComponent implements OnInit {
     this.form.get('imagefront').setValidators(Validators.required);
     this.form.get('imageback').setValidators(Validators.required);
     this.form.get('combines').disable();
+    this.form.get('imagefront').disable();
+    this.form.get('imageback').disable();
   }
 
   generateGroupAffiliations(): void {
-    const affiliationValues = this.form.get('affiliation').value.split(',');
-    this.affiliationsArray = affiliationValues.map( value => {
-      return { 'name': value, 'selected': true }
-    });
+    if (this.form.get('affiliation').value) {
+      const affiliationValues = this.form.get('affiliation').value.split(',');
+      this.affiliationsArray = affiliationValues.map( value => {
+        return { 'name': value, 'selected': true }
+      });
+
+    }
     console.log(this.affiliationsArray)
   }
 
@@ -113,21 +118,23 @@ export class EditCardComponent implements OnInit {
 
       this.loading = true;
       if (this.pageMode === 'edit-card') {
-        this.editCardService.updateCard(this.form.value._id, this.form.value).subscribe({
+        this.editCardService.updateCard(this.form.value._id, this.form.getRawValue()).subscribe({
           next: data => {
-            this.showSuccessToast();
-            console.log('finished:', data);
-            this.loading = false;
+            if (this.previewCardFrontImage || this.previewCardBackImage) {
+              this.submitPictures();
+            } else {
+              this.showSuccessToast();
+              console.log('finished:', data);
+              this.loading = false;
+            }
           },
           error: error => console.log(error),
           complete: ()=> console.log('completed')
         });
       } else {
-          this.addCardService.addCard(this.form.value).subscribe({
+          this.addCardService.addCard(this.form.getRawValue()).subscribe({
             next: data => {
-              this.showSuccessToast();
-              console.log('finished:', data);
-              this.loading = false;
+              this.submitPictures();
             },
             error: error => console.log(error),
             complete: ()=> console.log('completed')
@@ -137,6 +144,23 @@ export class EditCardComponent implements OnInit {
     } else {
       this.form.markAllAsTouched();
     }
+  }
+
+  submitPictures(): void {
+    const formData = new FormData();
+    this.fileData.forEach((file,index) => formData.append('file'+index, file));
+    formData.forEach((value,key) => {
+      console.log(key+" "+value)
+    });
+    this.addCardService.addImages(formData).subscribe({
+      next: data => {
+        this.showSuccessToast();
+        console.log('finished:', data);
+        this.loading = false;
+      },
+      error: error => console.log('error:',error),
+      complete: ()=> console.log('completed')
+    });
   }
 
   showSuccessToast(): void {
@@ -164,6 +188,7 @@ export class EditCardComponent implements OnInit {
 
   seeform() {
     console.log(this.form);
+    console.log('raw value:', this.form.getRawValue());
     console.log(this.affiliationsArray);
     this.setGroupAffiliations();
   }
@@ -174,11 +199,13 @@ export class EditCardComponent implements OnInit {
         this.fileData[0] = <File>fileInput.target.files[0];
         console.log('filedata: ',this.fileData);
          this.previewImage(this.fileData[0], cardSide);
+         this.form.get('imagefront').patchValue(this.fileData[0].name)
         break;
       case 'back':
         this.fileData[1] = <File>fileInput.target.files[0];
         console.log('filedata: ',this.fileData);
          this.previewImage(this.fileData[1], cardSide);
+         this.form.get('imageback').patchValue(this.fileData[1].name)
         break;
       default:
         break;
@@ -206,6 +233,14 @@ export class EditCardComponent implements OnInit {
           break;
       } 
     }
+  }
+
+  showPreviewFrontImage(): boolean {
+    return this.pageMode === 'edit-card' && !this.previewCardFrontImage;
+  }
+
+  showPreviewBackImage(): boolean {
+    return this.pageMode === 'edit-card' && !this.previewCardBackImage;
   }
 
 }

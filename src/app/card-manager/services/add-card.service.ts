@@ -17,4 +17,9 @@ export class AddCardService extends BaseHttpService{
   public addCard(payload: MarvelCard): Observable<MarvelCard> {
     return super.post(payload);
   }
+
+  public addImages(payload: any): Observable<any> {
+    return super.postImages(payload);
+  }
+  
 }

@@ -1,11 +1,11 @@
 <?php
-	$dbhost = '107.180.54.170:3306'; // server DB
-	//$dbhost = 'localhost'; // server DB
-	$dbuser = 'eliseu';
-	$dbpass = '123456';
+	// $dbhost = '107.180.54.170:3306'; // server DB
+	// //$dbhost = 'localhost'; // server DB
+	// $dbuser = 'eliseu';
+	// $dbpass = '123456';
 
-	$db = 'collectionManagerDB';
+	// $db = 'collectionManagerDB';
 
-	$conn = new mysqli($dbhost,$dbuser,$dbpass,$db);
-	mysqli_select_db($conn, $db);
+	// $conn = new mysqli($dbhost,$dbuser,$dbpass,$db);
+	// mysqli_select_db($conn, $db);
 ?>

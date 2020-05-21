@@ -34,6 +34,13 @@ export abstract class BaseHttpService {
       .post<TResult>(this.baseURL, params, {headers: this.headers})
   }
 
+  protected postImages<TResult>(
+    params: any,
+    options?: {headers: HttpHeaders}): Observable<TResult> {
+    return this.httpClient
+      .post<TResult>('http://thepixelhand.ca/projects/marvelcards/backend/include.php?type=item', params)
+  }
+
   protected delete<TResult>(
     url: string,
     options?: {headers: HttpHeaders}): Observable<TResult> {

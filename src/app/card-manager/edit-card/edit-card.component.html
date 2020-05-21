@@ -135,10 +135,10 @@
                         <label for="picture">Card Image Front:</label>
                         <input type="text" class="form-control" formControlName="imagefront">
                         <input type="file" name="image" (change)="fileProgress($event, 'front')" />
-                        <div class="image-preview mb-3" *ngIf="previewCardFrontImage">
-                          <img [src]="previewCardFrontImage" height="300" />                 
+                        <div class="mb-3" >
+                          <img class="image-preview" [src]="previewCardFrontImage" *ngIf="previewCardFrontImage" />                 
+                          <img class="image-preview" *ngIf="showPreviewFrontImage()" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.getRawValue().imagefront" alt=""><br>
                         </div>
-                        <img class="mt-3" *ngIf="this.pageMode === 'edit-card'" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.value.imagefront" alt=""><br>
                     </div>
                   </div>
                   <div class="col-6">
@@ -146,10 +146,10 @@
                         <label for="picture">Card Image Back:</label>
                         <input type="text" class="form-control" formControlName="imageback">
                         <input type="file" name="image" (change)="fileProgress($event, 'back')" />
-                        <div class="image-preview mb-3" *ngIf="previewCardBackImage">
-                          <img [src]="previewCardBackImage" height="300" />                 
+                        <div class="mb-3">
+                          <img class="image-preview" [src]="previewCardBackImage" *ngIf="previewCardBackImage"/>                 
+                          <img class="image-preview" *ngIf="showPreviewBackImage()" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.getRawValue().imageback" alt=""><br>
                         </div>
-                        <img class="mt-3" *ngIf="this.pageMode === 'edit-card'" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.value.imageback" alt=""><br>
                     </div>
                   </div>
               </div>
