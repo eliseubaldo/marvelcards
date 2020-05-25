@@ -1,0 +1,29 @@
+.card-game {
+    min-height: calc(100vh - 80px); // 80px = header height
+
+    &_container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background-color: rgba($color: #a36bff, $alpha: .5)
+    }
+
+    &_computer-block {
+        flex-grow: 2;
+    }
+
+    &_player-block {
+        flex-grow: 2;
+    }
+
+
+
+}
+
+.cardTest:before {
+    content: "\1f0a0";
+    display: block;
+    width: 50px;
+    font-size:43px;
+    cursor: pointer;
+}

@@ -4,19 +4,19 @@
       <app-spinner message='Loading' *ngIf="loading"></app-spinner>
       <form [formGroup]="form" *ngIf="!loading" (submit)="submitForm()" novalidate #editform="ngForm" [ngClass]="{'submitted': editform.submitted}">
         <div class="row">
-          <div class="col-6">
+          <div class="col-md-6">
 
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" class="form-control" formControlName="name" >
             </div>
-            <div class="form-group">
+            <div class="form-group mt-4">
               <label for="attack">Attack:</label>&nbsp;<ngbd-rating-events formControlName="attack"></ngbd-rating-events>
             </div>
             <div class="form-group">
               <label for="defense">Defense:</label>&nbsp;<ngbd-rating-events formControlName="defense"></ngbd-rating-events>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-4">
               <div class="row">
                 <div class="col-6">
                   <label for="matches">Card Combinations</label>
@@ -39,7 +39,7 @@
             </div>
         
 
-            <fieldset class="form-group">
+            <fieldset class="form-group mt-4">
                 <div class="row">
                   <legend class="col-form-label col-sm-2 pt-0">Card Type: </legend>
                   <div class="col-sm-10">
@@ -78,7 +78,7 @@
                 </div>
               </fieldset>
 
-            <fieldset class="form-group">
+            <fieldset class="form-group mt-4">
               <div class="row">
                 <legend class="col-form-label col-sm-2 pt-0">Alignment: </legend>
                 <div class="col-sm-10">
@@ -110,7 +110,7 @@
               </div>
             </fieldset>
 
-            <fieldset class="form-group">
+            <fieldset class="form-group mt-4">
               <div class="row">
                 <legend class="col-form-label col-sm-2 pt-0">Group Affiliations: </legend>
                 <div class="col-sm-4">
@@ -128,7 +128,7 @@
             </fieldset>
 
           </div>
-          <div class="col-6">
+          <div class="col-md-6">
               <div class="row">
                   <div class="col-6">
                     <div class="form-group">
@@ -157,7 +157,6 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <a class="btn btn-primary">Save</a>
             <a class="btn btn-primary ml-1" (click)="seeform()">see form</a>
             <button type="submit" class="btn btn-primary ml-1">submit</button>
           </div>

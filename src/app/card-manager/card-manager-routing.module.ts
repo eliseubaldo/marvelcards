@@ -17,7 +17,7 @@ import {
 import {
   EditCardComponent
 } from './edit-card/edit-card.component';
-import { AddCardComponent } from './add-card/add-card.component';
+
 
 
 const routes: Routes = [{

@@ -5,7 +5,7 @@
       <app-spinner message='Updating card list' *ngIf="updating" [overContent]="true"></app-spinner>
       <ng-container *ngIf="!loading">
         <div class="row">
-          <div class="col-12 mb-4 card-list__nav-container">
+          <div class="col-12 col-md-12 mb-4 card-list__nav-container">
             <ul class="nav nav-pills card-list__nav">
               <li class="nav-item"><span class="nav-label">Cards Per Page: </span> </li>
               <li class="nav-item">
@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 col-md-12">
             <table class="table table-sm table-striped">
               <thead class="thead-light">
                 <tr>
@@ -70,7 +70,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12 mt-3">
+          <div class="col-12 col-md-12 mt-3">
             <app-pagination [totalCount]="cardTotal" [amountPerPage]="cardsPerPage" (skipToPage)="moveToPage($event)"></app-pagination>
           </div>
         </div>

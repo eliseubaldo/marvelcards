@@ -6,3 +6,31 @@
     width: 100%;
     max-width:100%;
 }
+
+.rowHeader {
+    background-color: #e9ecef;
+    min-width: 183px;
+}
+
+.powersData {
+    background-color: #7289da;
+    color: #00276e;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.rowData {
+    font-size: 18px;
+    text-transform: capitalize;
+}
+
+.table-viewCard {
+    td {
+        background-color: #f5faff;
+    }
+}
+
+.heroName {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+}
