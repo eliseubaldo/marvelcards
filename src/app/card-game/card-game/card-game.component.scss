@@ -18,15 +18,13 @@
 
     &_card-hand {
         display: flex;
-        height: 100%;
+        min-height: 90%;
         background-color: white;
 
         &_card {
-            flex-shrink: 3;
-            height:100%;
+            max-height: 90%;
             img {
-                
-                height: 100%;
+                width: 100%;
                 vertical-align: unset;
 
             }
