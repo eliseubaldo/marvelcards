@@ -1,5 +1,5 @@
 .card-game {
-    min-height: calc(100vh - 80px); // 80px = header height
+    min-height: calc(100vh - 180px); // 80px = header height
 
     &_container {
         display: flex;
@@ -14,6 +14,23 @@
 
     &_player-block {
         flex-grow: 2;
+    }
+
+    &_card-hand {
+        display: flex;
+        height: 100%;
+        background-color: white;
+
+        &_card {
+            flex-shrink: 3;
+            height:100%;
+            img {
+                
+                height: 100%;
+                vertical-align: unset;
+
+            }
+        }
     }
 
 

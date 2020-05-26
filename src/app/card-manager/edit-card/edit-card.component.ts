@@ -3,7 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common' 
 import { ViewCardService } from '../services/view-card.service';
-import { MarvelCard } from 'src/app/models/marvelcard.interface';
+import { MarvelCard } from 'src/app/models/marvelcard.model';
 import { EditCardService } from '../services/edit-card.service';
 import { AddCardService } from '../services/add-card.service';
 import { ToastService } from 'src/app/services/toast.service';

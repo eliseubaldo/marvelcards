@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CardsListService } from 'src/app/card-manager/services/cards-list.service';
-import { map, filter } from 'rxjs/operators';
-import { MarvelCard } from 'src/app/models/marvelcard.interface';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-combine-cards-modal',
