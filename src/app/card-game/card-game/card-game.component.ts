@@ -146,6 +146,7 @@ export class CardGameComponent implements OnInit {
 
     if (this.playerHand && this.computerHand) { 
       console.log('run ConfrontCards');
+      this.currentRoundTurn = null;
       this.confrontCards();
     };
 
@@ -173,37 +174,66 @@ export class CardGameComponent implements OnInit {
       this.computerHandPowers.defense += card.defense;
     });
 
-    this.endHand('computer');
+    this.sleep(3000).then( ()=> {
+      this.endHand('computer');
+    });
+    
   }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
 
   confrontCards(): void {
     // who starts ?
     let opResult = 0;
-
+    // who attacks first (round starter) has a chance to strike out the opponent card(s)
     if (this.roundStarter === 'player') {
 
       if(this.playerHandPowers.attack > this.computerHandPowers.defense) {
         opResult = this.playerHandPowers.attack - this.computerHandPowers.defense;
+        
+        //is it double the defense? to strike out ?
+        if (opResult >= this.computerHandPowers.defense) {
+          this.computerCardsHand = [];
+        }
+        this.computerEnergy -= opResult;
+      } else {
+        // whoever attacks first and cant attack opponent, get hit back by opponent defense
+        this.playerEnergy -= this.computerHandPowers.defense - this.playerHandPowers.attack;
       }
-      
-      this.computerEnergy -= opResult;
 
-      this.startNewRound();
+      this.startNewRound('computer');
 
     } else {
+      if(this.computerHandPowers.attack > this.playerHandPowers.defense) {
+        opResult = this.computerHandPowers.attack - this.playerHandPowers.defense;
+        
+        //is it double the defense? to strike out ?
+        if (opResult >= this.playerHandPowers.defense) {
+          this.playerCardsHand = [];
+        }
+        this.playerEnergy -= opResult;
+      } else {
+        // whoever attacks first and cant attack opponent, get hit back by opponent defense
+        this.computerEnergy -= this.playerHandPowers.defense - this.computerHandPowers.attack;
+      }
+      this.startNewRound('player');
 
     }
 
-
-
-
   }
 
-  startNewRound(): void {
-    this.currentRoundTurn = 'computer';
+  startNewRound(who: string): void {
+    this.currentRoundTurn = who;
     this.computerHand = false;
     this.playerHand = false;
-    this.roundStarter = 'computer'; // Rnd later
+    this.roundStarter = who;
+
+    if (who === 'computer') {
+      this.computerPlayTurn();
+    }
   }
 
 }
