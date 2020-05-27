@@ -19,6 +19,9 @@ export class CardGameComponent implements OnInit {
   private BATTLE_CARDS = [];
   private GROUP_CARDS = [];
   private COMIC_CARDS = [];
+  private computerHand = false; // If computer played his hand in current turn
+  private playerHand = false; // Same above for player
+  private roundStarter = 'player'; // Rnd later
 
   public playerEnergy = this.START_ENERGY;
   public computerEnergy = this.START_ENERGY;
@@ -26,6 +29,10 @@ export class CardGameComponent implements OnInit {
   public computerDeck = [];
   public playerCardsHand = [];
   public computerCardsHand = [];
+  public currentRoundTurn = 'player';
+  
+
+  
 
   public playerHandPowers = {
     attack: 0,
@@ -112,9 +119,6 @@ export class CardGameComponent implements OnInit {
   playCard(): void {
     this.playerCardsHand.push(this.playerDeck.shift());
     this.updatePlayerTurnPower();
-
-
-    
   }
 
   updatePlayerTurnPower(): void {
@@ -125,7 +129,81 @@ export class CardGameComponent implements OnInit {
       this.playerHandPowers.attack += card.attack;
       this.playerHandPowers.defense += card.defense;
     })
+  }
 
+  endHand(who: string): void {
+    switch (who) {
+      case 'player':
+        this.playerHand = true;
+      break;
+
+      case 'computer':
+        this.computerHand = true;
+      break;
+      default:
+        break;
+    }
+
+    if (this.playerHand && this.computerHand) { 
+      console.log('run ConfrontCards');
+      this.confrontCards();
+    };
+
+    if (this.playerHand && !this.computerHand) {
+      this.currentRoundTurn = 'computer';
+       this.computerPlayTurn();
+    }
+
+    if (this.computerHand && !this.playerHand) {
+      this.currentRoundTurn = 'player';
+    }
+  }
+
+  computerPlayTurn(): void {
+    this.computerCardsHand.push(this.computerDeck.shift());
+    this.updateComputerTurnPower();
+  }
+
+  updateComputerTurnPower(): void {
+    this.computerHandPowers.attack = 0;
+    this.computerHandPowers.defense = 0;
+
+    this.computerCardsHand.forEach(card => {
+      this.computerHandPowers.attack += card.attack;
+      this.computerHandPowers.defense += card.defense;
+    });
+
+    this.endHand('computer');
+  }
+
+  confrontCards(): void {
+    // who starts ?
+    let opResult = 0;
+
+    if (this.roundStarter === 'player') {
+
+      if(this.playerHandPowers.attack > this.computerHandPowers.defense) {
+        opResult = this.playerHandPowers.attack - this.computerHandPowers.defense;
+      }
+      
+      this.computerEnergy -= opResult;
+
+      this.startNewRound();
+
+    } else {
+
+    }
+
+
+
+
+  }
+
+  startNewRound(): void {
+    this.currentRoundTurn = 'computer';
+    this.computerHand = false;
+    this.playerHand = false;
+    this.roundStarter = 'computer'; // Rnd later
   }
 
 }

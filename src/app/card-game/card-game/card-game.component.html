@@ -1,98 +1,106 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12 card-game">
-            <app-spinner message='Loading' *ngIf="loading" [overContent]="true"></app-spinner>
-            <div class="card-game_container" *ngIf="!loading">
+  <div class="row">
+    <div class="col-12 card-game">
+      <app-spinner message='Loading' *ngIf="loading" [overContent]="true"></app-spinner>
+      <div class="card-game_container" *ngIf="!loading">
 
-                <div class="row card-game_computer-block">
-                    <div class="col-3">
-                        <div class="card">
-                            <div class="card">
-                                <ul class="list-group list-group-flush">
-                                  <li class="list-group-item">Energy: 100</li>
-                                  <li class="list-group-item">Double Cards: 4</li>
-                                </ul>
-                              </div> 
-                        </div>
-                        <div class="card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Your DECK - XX cards</h5>
-                                    <div class="cardTest"></div>    
-                                    <a href="#" class="btn btn-primary">End Turn</a>
-                                </div>
-                              </div> 
-                        </div>
-            </div>
+        <div class="row card-game_computer-block">
+            <div class="col-3">
+                <div class="card">
+                  <div class="card">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Energy: {{computerEnergy}}</li>
+                      <li class="list-group-item">Double Cards: 4</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Your DECK - {{computerDeck.length}} cards</h5>
+                      <div class="cardTest"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
     
-            <div class="col-9">
-                <div class="row">
-                    <div class="col-5">
-                        <div class="card">
-                            Attack power: {{computerHandPowers.attack}} <br>
-                            Defense Power: {{computerHandPowers.defense}}
-                        </div>
+              <div class="col-9">
+                <div class="row" style="min-height: 100%;">
+                  <div class="col-5">
+                    <div class="card">
+                      Attack power: {{computerHandPowers.attack}} <br>
+                      Defense Power: {{computerHandPowers.defense}}
                     </div>
-                    <div class="col-7">
-                        <div class="card">
-                        cards turn:
-                    </div></div>
-                </div>
-            </div>
-                </div>
-
-                <div class="row card-game_player-block">
-                    <div class="col-3">
-                                <div class="card">
-                                    <div class="card">
-                                        <ul class="list-group list-group-flush">
-                                          <li class="list-group-item">Energy: 100</li>
-                                          <li class="list-group-item">Double Cards: 4</li>
-                                        </ul>
-                                      </div> 
-                                </div>
-                                <div class="card">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Your DECK - XX cards</h5>
-                                            <div class="cardTest"></div>    
-                                            <button (click)="playCard()" class="btn btn-primary">Play Card</button>
-                                        </div>
-                                      </div> 
-                                </div>
-                    </div>
-            
-                    <div class="col-9">
-                        <div class="row" style="min-height: 100%;">
-                            <div class="col-5">
-                                <div class="card">
-                                    Attack power: {{playerHandPowers.attack}} <br>
-                                    Defense Power: {{playerHandPowers.defense}}
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="card-game_card-hand">
-                                <ng-template [ngIf]="playerCardsHand.length > 0">
-
-                                    <div *ngFor="let card of playerCardsHand" class="card-game_card-hand_card"> 
-                                      <img src="http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/{{card.imagefront}}">
-                                    </div>
-                                </ng-template>
-                            </div>
+                  </div>
+                  <div class="col-7">
+                    <div class="card-game_card-hand">
+                      <ng-template [ngIf]="computerCardsHand.length > 0">
+    
+                        <div *ngFor="let card of computerCardsHand" class="card-game_card-hand_card">
+                          <img src="http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/{{card.imagefront}}">
                         </div>
-                        </div>
+                      </ng-template>
                     </div>
+                  </div>
                 </div>
-
-
-
-            </div>
-
-            
-        
-            
-
+              </div>
         </div>
+
+        <div class="row card-game_player-block">
+          <div class="col-3">
+            <div class="card">
+              <div class="card">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Energy: {{playerEnergy}}</li>
+                  <li class="list-group-item">Double Cards: 4</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Your DECK - {{playerDeck.length}} cards</h5>
+                  <div class="cardTest"></div>
+                  <ng-template [ngIf]="currentRoundTurn === 'player'">
+                      <button (click)="playCard()" class="btn btn-primary">Play Card</button>
+                      <button (click)="endHand('player')" class="btn btn-primary">end turn</button>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-9">
+            <div class="row" style="min-height: 100%;">
+              <div class="col-5">
+                <div class="card">
+                  Attack power: {{playerHandPowers.attack}} <br>
+                  Defense Power: {{playerHandPowers.defense}}
+                </div>
+              </div>
+              <div class="col-7">
+                <div class="card-game_card-hand">
+                  <ng-template [ngIf]="playerCardsHand.length > 0">
+
+                    <div *ngFor="let card of playerCardsHand" class="card-game_card-hand_card">
+                      <img src="http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/{{card.imagefront}}">
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+
+
+
     </div>
-   
+  </div>
+
 </div>
