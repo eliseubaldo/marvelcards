@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CardsListService } from 'src/app/card-manager/services/cards-list.service';
 import { MarvelCard } from 'src/app/models/marvelcard.interface';
 import { map } from 'rxjs/operators';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-card-game',
@@ -32,10 +34,8 @@ export class CardGameComponent implements OnInit {
   public playerCardsHand = [];
   public computerCardsHand = [];
   public currentRoundTurn = 'player';
+  private modalRef: NgbModalRef;
   
-
-  
-
   public playerHandPowers = {
     attack: 0,
     defense: 0
@@ -46,10 +46,9 @@ export class CardGameComponent implements OnInit {
     defense: 0
   }
 
-
   public loading = true;
 
-  constructor(private cardListService: CardsListService) { 
+  constructor(private cardListService: CardsListService, private readonly modalService: NgbModal) { 
     this.cardListService.getCardList().subscribe({
       next: data => {
         this.filterCards(data);
@@ -63,6 +62,15 @@ export class CardGameComponent implements OnInit {
 
   ngOnInit() {
     
+  }
+
+  openGameEndModal(winner: string): void {
+    this.modalRef = this.modalService.open(ConfirmationModalComponent, {size: 'xl'});
+    this.modalRef.componentInstance.title = 'GAME END';
+    this.modalRef.componentInstance.message = winner;
+    this.modalRef.componentInstance.confirmText = 'Play again';
+    this.modalRef.componentInstance.cancelText = 'End';
+    this.modalRef.componentInstance.confirmed.subscribe(() => console.log('said yes'));
   }
 
   filterCards(cardList: MarvelCard[]): void {
@@ -245,6 +253,8 @@ export class CardGameComponent implements OnInit {
     this.playerDoubled = false;
     this.roundStarter = who;
 
+    this.playersCanPlay();
+
     this.exhaustPlayersCards();
 
     if (who === 'computer') {
@@ -293,6 +303,15 @@ export class CardGameComponent implements OnInit {
     cardsArray.forEach((card) => {
       card.roundAdded --;
     });
+  }
+
+  private playersCanPlay(): void {
+    if (this.playerEnergy <= 0) {
+      this.openGameEndModal('Computer Wins');
+    } else if (this.computerEnergy <= 0) {
+      this.openGameEndModal('Player Wins');
+    }
+
   }
 
 }

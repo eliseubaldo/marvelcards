@@ -62,7 +62,7 @@
                   <h5 class="card-title">Player Cards left {{playerDeck.length}}</h5>
                   <div class="cardTest"></div>
                   <ng-template [ngIf]="currentRoundTurn === 'player'">
-                      <button (click)="playCard()" [disabled]="playerHand" class="btn btn-primary mr-2">Play Card</button>
+                      <button (click)="playCard()" [disabled]="playerHand" *ngIf="playerDeck.length > 0" class="btn btn-primary mr-2">Play Card</button>
                       <button (click)="endHand('player')" class="btn btn-primary">end turn</button>
                   </ng-template>
                 </div>
