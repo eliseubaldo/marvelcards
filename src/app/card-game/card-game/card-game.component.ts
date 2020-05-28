@@ -10,19 +10,21 @@ import { map } from 'rxjs/operators';
 })
 export class CardGameComponent implements OnInit {
 
-  private START_ENERGY = 100;
+  private START_ENERGY = 25;
   private DECK_START_CARDS = 12;
   private START_DOUBLE_CARDS = 2;
-
   private HEROES_CARDS = [];
   private VILLAINS_CARDS = [];
   private BATTLE_CARDS = [];
   private GROUP_CARDS = [];
   private COMIC_CARDS = [];
+  public CURRENT_ROUND = 1;
   private computerHand = false; // If computer played his hand in current turn
   private playerHand = false; // Same above for player
   private roundStarter = 'player'; // Rnd later
-
+  public playerDoubled = false; // if player played a double card
+  public playerDoubleCards = this.START_DOUBLE_CARDS;
+  public computerDoubleCards = this.START_DOUBLE_CARDS;
   public playerEnergy = this.START_ENERGY;
   public computerEnergy = this.START_ENERGY;
   public playerDeck = [];
@@ -116,8 +118,14 @@ export class CardGameComponent implements OnInit {
     console.log('computerdeck: ', this.computerDeck);
   }
 
-  playCard(): void {
-    this.playerCardsHand.push(this.playerDeck.shift());
+  playCard(type: string = null): void {
+    if (type === 'double') {
+      this.playerDoubled = true;
+      this.playerDoubleCards -= 1;
+    }
+    const lastcard = this.playerCardsHand.push(this.playerDeck.shift());
+    this.playerCardsHand[lastcard - 1].roundAdded = this.CURRENT_ROUND;
+    this.playerHand = true;
     this.updatePlayerTurnPower();
   }
 
@@ -161,7 +169,9 @@ export class CardGameComponent implements OnInit {
   }
 
   computerPlayTurn(): void {
-    this.computerCardsHand.push(this.computerDeck.shift());
+    const lastcard = this.computerCardsHand.push(this.computerDeck.shift());
+    this.computerCardsHand[lastcard -1].roundAdded = this.CURRENT_ROUND;
+    this.computerHand = true;
     this.updateComputerTurnPower();
   }
 
@@ -202,6 +212,7 @@ export class CardGameComponent implements OnInit {
       } else {
         // whoever attacks first and cant attack opponent, get hit back by opponent defense
         this.playerEnergy -= this.computerHandPowers.defense - this.playerHandPowers.attack;
+       this.exhaustDefender('computer');
       }
 
       this.startNewRound('computer');
@@ -218,6 +229,7 @@ export class CardGameComponent implements OnInit {
       } else {
         // whoever attacks first and cant attack opponent, get hit back by opponent defense
         this.computerEnergy -= this.playerHandPowers.defense - this.computerHandPowers.attack;
+        this.exhaustDefender('player');
       }
       this.startNewRound('player');
 
@@ -226,14 +238,61 @@ export class CardGameComponent implements OnInit {
   }
 
   startNewRound(who: string): void {
+    this.CURRENT_ROUND += 1;
     this.currentRoundTurn = who;
     this.computerHand = false;
     this.playerHand = false;
+    this.playerDoubled = false;
     this.roundStarter = who;
+
+    this.exhaustPlayersCards();
 
     if (who === 'computer') {
       this.computerPlayTurn();
     }
+  }
+
+
+  exhaustDefender(who: string): void {
+    //  "card gets tired" by lasting one less round
+    if (who === 'computer') {
+       this.reduceCardsRound(this.computerCardsHand);
+    } else {
+      this.reduceCardsRound(this.playerCardsHand);
+    }
+  }
+
+  exhaustPlayersCards(): void {
+
+   this.removeCards(this.playerCardsHand, 'player');
+   this.removeCards(this.computerCardsHand, 'computer');
+
+
+  }
+
+  private removeCards(cardArray: any, who: string): void {
+    let attackReducer = 0, defenseReducer = 0;
+    cardArray.forEach((card, index) => {
+      const exhaustFactor = this.CURRENT_ROUND - card.roundAdded;
+      if (exhaustFactor > 3) {
+        const removedCard = cardArray.splice(index, 1);
+        attackReducer += removedCard[0].attack;
+        defenseReducer += removedCard[0].defense;
+      }
+    });
+    if (who === 'player') {
+      this.playerHandPowers.attack -= attackReducer;
+      this.playerHandPowers.defense -= defenseReducer;
+    } else {
+      this.computerHandPowers.attack -= attackReducer;
+      this.computerHandPowers.defense -= defenseReducer;
+    }
+  }
+
+  private reduceCardsRound(cardsArray: any): void {
+    cardsArray.forEach((card) => {
+      card.roundAdded --;
+    });
   }
 
 }

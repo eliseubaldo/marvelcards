@@ -17,7 +17,7 @@
                 <div class="card">
                   <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title">Your DECK - {{computerDeck.length}} cards</h5>
+                      <h5 class="card-title">Computer Cards left {{computerDeck.length}}</h5>
                       <div class="cardTest"></div>
                     </div>
                   </div>
@@ -26,13 +26,13 @@
     
               <div class="col-9">
                 <div class="row" style="min-height: 100%;">
-                  <div class="col-5">
+                  <div class="col-3">
                     <div class="card">
                       Attack power: {{computerHandPowers.attack}} <br>
                       Defense Power: {{computerHandPowers.defense}}
                     </div>
                   </div>
-                  <div class="col-7">
+                  <div class="col-9">
                     <div class="card-game_card-hand">
                       <ng-template [ngIf]="computerCardsHand.length > 0">
     
@@ -52,17 +52,17 @@
               <div class="card">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">Energy: {{playerEnergy}}</li>
-                  <li class="list-group-item">Double Cards: 4</li>
+                  <li class="list-group-item">Double Cards: {{playerDoubleCards}} <button (click)="playCard('double')" *ngIf="playerHand && playerDoubleCards > 0" [disabled]="playerDoubled" class="btn btn-primary">Add extra card</button></li>
                 </ul>
               </div>
             </div>
             <div class="card">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Your DECK - {{playerDeck.length}} cards</h5>
+                  <h5 class="card-title">Player Cards left {{playerDeck.length}}</h5>
                   <div class="cardTest"></div>
                   <ng-template [ngIf]="currentRoundTurn === 'player'">
-                      <button (click)="playCard()" class="btn btn-primary">Play Card</button>
+                      <button (click)="playCard()" [disabled]="playerHand" class="btn btn-primary mr-2">Play Card</button>
                       <button (click)="endHand('player')" class="btn btn-primary">end turn</button>
                   </ng-template>
                 </div>
@@ -72,13 +72,13 @@
 
           <div class="col-9">
             <div class="row" style="min-height: 100%;">
-              <div class="col-5">
+              <div class="col-3">
                 <div class="card">
                   Attack power: {{playerHandPowers.attack}} <br>
                   Defense Power: {{playerHandPowers.defense}}
                 </div>
               </div>
-              <div class="col-7">
+              <div class="col-9">
                 <div class="card-game_card-hand">
                   <ng-template [ngIf]="playerCardsHand.length > 0">
 
