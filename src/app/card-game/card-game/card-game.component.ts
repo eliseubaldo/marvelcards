@@ -36,6 +36,21 @@ export class CardGameComponent implements OnInit {
   public currentRoundTurn = 'player';
   private modalRef: NgbModalRef;
   
+  // Animation Conditionals
+  public runPlayerAnimation = false;
+  public runComputerAnimation = false;
+  public computerDealCardAnimation = false;
+  public playerDealCardAnimation = false;
+  public playerRemoveCardAnimaton = false;
+  public computerRemoveCardAnimaton = false;
+
+  private roundResults =  {
+    roundStarter: null, 
+    strikeOut: null, 
+    energyLost: null, 
+    attackResult: null
+  }
+  
   public playerHandPowers = {
     attack: 0,
     defense: 0
@@ -71,6 +86,15 @@ export class CardGameComponent implements OnInit {
     this.modalRef.componentInstance.confirmText = 'Play again';
     this.modalRef.componentInstance.cancelText = 'End';
     this.modalRef.componentInstance.confirmed.subscribe(() => console.log('said yes'));
+  }
+
+  openConfrontResultModal(message: string): void {
+    this.modalRef = this.modalService.open(ConfirmationModalComponent, {size: 'l'});
+    this.modalRef.componentInstance.title = 'Confront Result';
+    this.modalRef.componentInstance.message = message;
+    this.modalRef.componentInstance.confirmText = 'Continue';
+    this.modalRef.componentInstance.cancelText = null;
+    this.modalRef.componentInstance.confirmed.subscribe(() => this.applyConfrontResults());
   }
 
   filterCards(cardList: MarvelCard[]): void {
@@ -131,10 +155,18 @@ export class CardGameComponent implements OnInit {
       this.playerDoubled = true;
       this.playerDoubleCards -= 1;
     }
+    this.playerDealtCardAnimation();
     const lastcard = this.playerCardsHand.push(this.playerDeck.shift());
     this.playerCardsHand[lastcard - 1].roundAdded = this.CURRENT_ROUND;
     this.playerHand = true;
     this.updatePlayerTurnPower();
+  }
+
+  playerDealtCardAnimation(): void {
+    this.playerDealCardAnimation = true;
+    this.sleep(1500).then( ()=> {
+      this.playerDealCardAnimation = false;
+    });
   }
 
   updatePlayerTurnPower(): void {
@@ -151,6 +183,7 @@ export class CardGameComponent implements OnInit {
     switch (who) {
       case 'player':
         this.playerHand = true;
+        this.playerDoubled = true;
       break;
 
       case 'computer':
@@ -177,10 +210,18 @@ export class CardGameComponent implements OnInit {
   }
 
   computerPlayTurn(): void {
+    this.computerDealtCardAnimation();
     const lastcard = this.computerCardsHand.push(this.computerDeck.shift());
     this.computerCardsHand[lastcard -1].roundAdded = this.CURRENT_ROUND;
     this.computerHand = true;
     this.updateComputerTurnPower();
+  }
+
+  computerDealtCardAnimation(): void {
+    this.computerDealCardAnimation = true;
+    this.sleep(1500).then( ()=> {
+      this.computerDealCardAnimation = false;
+    });
   }
 
   updateComputerTurnPower(): void {
@@ -192,7 +233,7 @@ export class CardGameComponent implements OnInit {
       this.computerHandPowers.defense += card.defense;
     });
 
-    this.sleep(3000).then( ()=> {
+    this.sleep(2000).then( ()=> {
       this.endHand('computer');
     });
     
@@ -205,44 +246,109 @@ export class CardGameComponent implements OnInit {
 
   confrontCards(): void {
     // who starts ?
-    let opResult = 0;
+    this.roundResults.roundStarter = this.roundStarter;
     // who attacks first (round starter) has a chance to strike out the opponent card(s)
     if (this.roundStarter === 'player') {
 
       if(this.playerHandPowers.attack > this.computerHandPowers.defense) {
-        opResult = this.playerHandPowers.attack - this.computerHandPowers.defense;
+        this.roundResults.attackResult = true;
+        this.roundResults.energyLost = this.playerHandPowers.attack - this.computerHandPowers.defense;
         
         //is it double the defense? to strike out ?
-        if (opResult >= this.computerHandPowers.defense) {
-          this.computerCardsHand = [];
+        if (this.roundResults.energyLost > this.computerHandPowers.defense) {
+          this.roundResults.strikeOut = true;
         }
-        this.computerEnergy -= opResult;
       } else {
+        this.roundResults.attackResult = false;
         // whoever attacks first and cant attack opponent, get hit back by opponent defense
-        this.playerEnergy -= this.computerHandPowers.defense - this.playerHandPowers.attack;
-       this.exhaustDefender('computer');
+        this.roundResults.energyLost = this.computerHandPowers.defense - this.playerHandPowers.attack;
+       
       }
-
-      this.startNewRound('computer');
 
     } else {
       if(this.computerHandPowers.attack > this.playerHandPowers.defense) {
-        opResult = this.computerHandPowers.attack - this.playerHandPowers.defense;
+        this.roundResults.attackResult = true;
+        this.roundResults.energyLost = this.computerHandPowers.attack - this.playerHandPowers.defense;
         
         //is it double the defense? to strike out ?
-        if (opResult >= this.playerHandPowers.defense) {
-          this.playerCardsHand = [];
+        if (this.roundResults.energyLost > this.playerHandPowers.defense) {
+          this.roundResults.strikeOut = true;
         }
-        this.playerEnergy -= opResult;
       } else {
+        this.roundResults.attackResult = false;
         // whoever attacks first and cant attack opponent, get hit back by opponent defense
-        this.computerEnergy -= this.playerHandPowers.defense - this.computerHandPowers.attack;
-        this.exhaustDefender('player');
+        this.roundResults.energyLost = this.playerHandPowers.defense - this.computerHandPowers.attack;
       }
-      this.startNewRound('player');
-
     }
 
+    this.confrontResults();
+  }
+
+  confrontResults(): void {
+    let message: string = '';
+    //show results
+    // apply results graphically
+
+      message += `Round attacker : ${this.roundResults.roundStarter}`;
+      message += ` | Attack result : ${this.roundResults.attackResult}`;
+      if (this.roundResults.attackResult) {
+        message += ` | Defender energy lost: ${this.roundResults.energyLost}`;
+        if (this.roundResults.strikeOut) {
+          message += ` | Attacker more than double the defense, cards defeated and out`;
+        }
+      } else {
+        message += ` | Attack failed, defender strike back, energy lost ${this.roundResults.energyLost}`;
+        message += ' | Defender exhaust cards in play due to fatigue: will last one round less (out of 3)';
+      }
+
+      this.openConfrontResultModal(message);
+
+  }
+
+  applyConfrontResults(): void {
+    if(this.roundResults.roundStarter === 'player') {
+      if (this.roundResults.attackResult) {
+        this.runComputerAnimation = true;
+          this.computerEnergy -= this.roundResults.energyLost;
+        if (this.roundResults.strikeOut) {
+          this.computerRemoveCardAnimaton = true;
+          this.sleep(1800).then( ()=> {
+            this.computerCardsHand = [];
+            this.computerRemoveCardAnimaton = false;
+          });
+        }
+      } else {
+        this.runPlayerAnimation = true;
+        this.playerEnergy -= this.roundResults.energyLost;
+        this.exhaustDefender('computer');
+      }
+      this.sleep(2200).then( ()=> {
+        this.startNewRound('computer');
+      });
+      
+    }
+    if(this.roundResults.roundStarter === 'computer') {
+      if (this.roundResults.attackResult) {
+        this.runPlayerAnimation = true;
+        this.playerEnergy -= this.roundResults.energyLost;
+
+        if (this.roundResults.strikeOut) {
+          this.playerRemoveCardAnimaton = true;
+          this.sleep(1800).then( ()=> {
+            this.playerCardsHand = [];
+            this.playerRemoveCardAnimaton = false;
+          });
+            
+        }
+      } else {
+        this.runComputerAnimation = true;
+        this.computerEnergy -= this.roundResults.energyLost;
+        this.exhaustDefender('player');
+      }
+      this.sleep(1800).then( ()=> {
+        this.startNewRound('player');
+      });
+    }
   }
 
   startNewRound(who: string): void {
@@ -252,6 +358,14 @@ export class CardGameComponent implements OnInit {
     this.playerHand = false;
     this.playerDoubled = false;
     this.roundStarter = who;
+    this.runPlayerAnimation = false;
+    this.runComputerAnimation = false;
+    this.roundResults =  {
+      roundStarter: null, 
+      strikeOut: null, 
+      energyLost: null, 
+      attackResult: null
+    }
 
     this.playersCanPlay();
 

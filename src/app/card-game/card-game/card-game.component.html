@@ -9,7 +9,7 @@
                 <div class="card">
                   <div class="card">
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item">Energy: {{computerEnergy}}</li>
+                      <li class="list-group-item">Energy: <span class="card-game_player-block_animated animate__flip" [ngClass]="{'animate__animated': runComputerAnimation}">{{computerEnergy}}</span></li>
                       <li class="list-group-item">Double Cards: 4</li>
                     </ul>
                   </div>
@@ -36,7 +36,7 @@
                     <div class="card-game_card-hand">
                       <ng-template [ngIf]="computerCardsHand.length > 0">
     
-                        <div *ngFor="let card of computerCardsHand" class="card-game_card-hand_card">
+                        <div *ngFor="let card of computerCardsHand" class="card-game_card-hand_card animate__animated" [ngClass]="{'animate__flip': computerDealCardAnimation, 'animate__fadeOutDown': computerRemoveCardAnimaton}">
                           <img src="http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/{{card.imagefront}}">
                         </div>
                       </ng-template>
@@ -51,7 +51,7 @@
             <div class="card">
               <div class="card">
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Energy: {{playerEnergy}}</li>
+                  <li class="list-group-item">Energy: <span class="card-game_player-block_animated animate__flip" [ngClass]="{'animate__animated': runPlayerAnimation}">{{playerEnergy}}</span></li>
                   <li class="list-group-item">Double Cards: {{playerDoubleCards}} <button (click)="playCard('double')" *ngIf="playerHand && playerDoubleCards > 0" [disabled]="playerDoubled" class="btn btn-primary">Add extra card</button></li>
                 </ul>
               </div>
@@ -82,7 +82,7 @@
                 <div class="card-game_card-hand">
                   <ng-template [ngIf]="playerCardsHand.length > 0">
 
-                    <div *ngFor="let card of playerCardsHand" class="card-game_card-hand_card">
+                    <div *ngFor="let card of playerCardsHand" class="card-game_card-hand_card animate__animated" [ngClass]="{'animate__flip': playerDealCardAnimation, 'animate__fadeOutDown': playerRemoveCardAnimaton}">
                       <img src="http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/{{card.imagefront}}">
                     </div>
                   </ng-template>
