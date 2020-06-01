@@ -73,7 +73,7 @@
                             Equipment
                         </label>
                       </div>
-                      <p *ngIf="form.get('cardtype').hasError('required') && editform.submitted">* Card Type is required</p>
+                      <p *ngIf="form.get('cardtype').hasError('required') && editform.submitted" class="hasError">* Card Type is required</p>
                   </div>
                 </div>
               </fieldset>
@@ -106,6 +106,7 @@
                       N/A
                     </label>
                   </div>
+                  <p *ngIf="form.get('alignment').hasError('required') && editform.submitted" class="hasError">* Alignment is required</p>
                 </div>
               </div>
             </fieldset>
@@ -135,6 +136,7 @@
                         <label for="picture">Card Image Front:</label>
                         <input type="text" class="form-control" formControlName="imagefront">
                         <input type="file" name="image" (change)="fileProgress($event, 'front')" />
+                        <p *ngIf="!form.get('imagefront').value && editform.submitted" class="hasError">* Card Front Image is required</p>
                         <div class="mb-3" >
                           <img class="image-preview" [src]="previewCardFrontImage" *ngIf="previewCardFrontImage" />                 
                           <img class="image-preview" *ngIf="showPreviewFrontImage()" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.getRawValue().imagefront" alt=""><br>
@@ -146,6 +148,7 @@
                         <label for="picture">Card Image Back:</label>
                         <input type="text" class="form-control" formControlName="imageback">
                         <input type="file" name="image" (change)="fileProgress($event, 'back')" />
+                        <p *ngIf="!form.get('imageback').value && editform.submitted" class="hasError">* Card back Image is required</p>
                         <div class="mb-3">
                           <img class="image-preview" [src]="previewCardBackImage" *ngIf="previewCardBackImage"/>                 
                           <img class="image-preview" *ngIf="showPreviewBackImage()" [src]="'http://thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/'+form.getRawValue().imageback" alt=""><br>

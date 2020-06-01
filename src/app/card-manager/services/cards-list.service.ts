@@ -14,7 +14,7 @@ export class CardsListService extends BaseHttpService {
   }
 
 
-  public getCardList(): Observable<any> {
+  public getCardList(): Observable<MarvelCard[]> {
     return super.get('');
   }
 
