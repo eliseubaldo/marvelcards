@@ -9,7 +9,6 @@ import { MarvelCard } from 'src/app/models/marvelcard.interface';
 })
 export class EditCardService extends BaseHttpService {
 
-  
   constructor(httpClient: HttpClient ) {
     super(httpClient);
   }

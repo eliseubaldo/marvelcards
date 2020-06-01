@@ -1,20 +1,52 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './components/header/header.component';
-import { RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdRatingEvents } from './components/rating-input/rating-input.component';
-import { SpinnerComponent } from './components/spinner/spinner.component';
-import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
-import { ToastsComponent } from './components/toasts/toasts.component';
-import { CombineCardsModalComponent } from './components/combine-cards-modal/combine-cards-modal.component';
-import { FormsModule } from '@angular/forms';
-import { PaginationComponent } from './components/pagination/pagination.component';
+import {
+  NgModule
+} from '@angular/core';
+import {
+  CommonModule
+} from '@angular/common';
+import {
+  HeaderComponent
+} from './components/header/header.component';
+import {
+  RouterModule
+} from '@angular/router';
+import {
+  NgbModule
+} from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbdRatingEventsComponent
+} from './components/rating-input/rating-input.component';
+import {
+  SpinnerComponent
+} from './components/spinner/spinner.component';
+import {
+  ConfirmationModalComponent
+} from './components/confirmation-modal/confirmation-modal.component';
+import {
+  ToastsComponent
+} from './components/toasts/toasts.component';
+import {
+  CombineCardsModalComponent
+} from './components/combine-cards-modal/combine-cards-modal.component';
+import {
+  FormsModule
+} from '@angular/forms';
+import {
+  PaginationComponent
+} from './components/pagination/pagination.component';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, NgbdRatingEvents, SpinnerComponent, ConfirmationModalComponent, ToastsComponent, CombineCardsModalComponent, PaginationComponent],
+  declarations: [
+    HeaderComponent,
+    NgbdRatingEventsComponent,
+    SpinnerComponent,
+    ConfirmationModalComponent,
+    ToastsComponent,
+    CombineCardsModalComponent,
+    PaginationComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -23,7 +55,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
   ],
   exports: [
     HeaderComponent,
-    NgbdRatingEvents,
+    NgbdRatingEventsComponent,
     SpinnerComponent,
     ToastsComponent,
     PaginationComponent
@@ -34,4 +66,4 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     CombineCardsModalComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

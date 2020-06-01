@@ -1,6 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {
+  Injectable
+} from '@angular/core';
+import {
+  HttpClient,
+  HttpHeaders
+} from '@angular/common/http';
+import {
+  Observable
+} from 'rxjs';
 
 @Injectable()
 export abstract class BaseHttpService {
@@ -11,50 +18,57 @@ export abstract class BaseHttpService {
   });
   baseURL = 'https://marvelheroes-1d22.restdb.io/rest/marvelcards';
 
-  constructor( protected readonly httpClient: HttpClient ) { }
+  constructor(protected readonly httpClient: HttpClient) {}
 
-  protected get<TResult>(url: string, params?: any): Observable<TResult> {
+  protected get < TResult >(url: string, params?: any): Observable < TResult > {
     return this.httpClient
-      .get<TResult>(this.baseURL+url, {headers: this.headers})
+      .get < TResult > (this.baseURL + url, {
+        headers: this.headers
+      });
   }
 
-  protected put<TResult>(
+  protected put < TResult >(
     url: string,
     params: any,
-    options?: {headers: HttpHeaders}): Observable<TResult> {
+    options ?: {
+      headers: HttpHeaders
+    }): Observable < TResult > {
     return this.httpClient
-      .put<TResult>(this.baseURL+url, params, {headers: this.headers})
-      
+      .put < TResult > (this.baseURL + url, params, {
+        headers: this.headers
+      });
+
   }
 
-  protected post<TResult>(
+  protected post < TResult >(
     params: any,
-    options?: {headers: HttpHeaders}): Observable<TResult> {
+    options ?: {
+      headers: HttpHeaders
+    }): Observable < TResult > {
     return this.httpClient
-      .post<TResult>(this.baseURL, params, {headers: this.headers})
+      .post < TResult > (this.baseURL, params, {
+        headers: this.headers
+      });
   }
 
-  protected postImages<TResult>(
+  protected postImages < TResult >(
     params: any,
-    options?: {headers: HttpHeaders}): Observable<TResult> {
+    options ?: {
+      headers: HttpHeaders
+    }): Observable < TResult > {
     return this.httpClient
-      .post<TResult>('http://thepixelhand.ca/projects/marvelcards/backend/include.php?type=item', params)
+      .post < TResult > ('http://thepixelhand.ca/projects/marvelcards/backend/include.php?type=item', params);
   }
 
-  protected delete<TResult>(
+  protected delete < TResult >(
     url: string,
-    options?: {headers: HttpHeaders}): Observable<TResult> {
+    options ?: {
+      headers: HttpHeaders
+    }): Observable < TResult > {
     return this.httpClient
-      .delete<TResult>(this.baseURL+url, {headers: this.headers})
+      .delete < TResult > (this.baseURL + url, {
+        headers: this.headers
+      });
   }
 
-
-
-  // getHeroes() {
-  //   return this.http.get('https://marvelheroes-1d22.restdb.io/rest/heroes', {headers: this.headers});
-  //   // return this.http.get('https://marvelheroes-1d22.restdb.io/rest/heroes?skip=10&max=10', {headers: this.headers});
-  // https://marvelheroes-1d22.restdb.io/rest/marvelcards?totals=true&count=true
-  // }
-
-  
 }

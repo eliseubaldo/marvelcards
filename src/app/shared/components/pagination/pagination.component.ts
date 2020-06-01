@@ -1,4 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 
 
 @Component({
@@ -8,11 +14,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class PaginationComponent implements OnInit {
 
-  @Input() totalCount: number = 0;
+  @Input() totalCount = 0;
 
-  @Input() amountPerPage: number = 0;
+  @Input() amountPerPage = 0;
 
-  @Output() skipToPage: EventEmitter<number> = new EventEmitter();
+  @Output() skipToPage: EventEmitter < number > = new EventEmitter();
 
   public paginationSteps = [];
   public currentPage = 1;
@@ -22,16 +28,16 @@ export class PaginationComponent implements OnInit {
 
   ngOnInit() {
     this.setPaginationSteps();
-    
+
   }
 
   setPaginationSteps(): void {
     const remainder = this.totalCount / this.amountPerPage;
-    this.totalPages =  Math.round(this.totalCount / this.amountPerPage);
-    if(remainder > this.totalPages) {
+    this.totalPages = Math.round(this.totalCount / this.amountPerPage);
+    if (remainder > this.totalPages) {
       this.totalPages += 1;
     }
-    this.paginationSteps = Array.from(Array(this.totalPages),(x,i)=>i+1);
+    this.paginationSteps = Array.from(Array(this.totalPages), (x, i) => i + 1);
   }
 
   moveToPage(index: number): void {

@@ -26,5 +26,4 @@ export class CardsListService extends BaseHttpService {
     return super.get('?totals=true&count=true');
   }
 
-  
 }

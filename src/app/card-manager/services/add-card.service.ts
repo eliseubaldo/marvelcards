@@ -7,7 +7,7 @@ import { BaseHttpService } from 'src/app/services/base-http.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AddCardService extends BaseHttpService{
+export class AddCardService extends BaseHttpService {
 
   constructor(httpClient: HttpClient ) {
     super(httpClient);
@@ -21,5 +21,5 @@ export class AddCardService extends BaseHttpService{
   public addImages(payload: any): Observable<any> {
     return super.postImages(payload);
   }
-  
+
 }

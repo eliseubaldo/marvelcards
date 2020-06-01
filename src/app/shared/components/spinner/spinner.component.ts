@@ -11,7 +11,7 @@ export class SpinnerComponent implements OnInit {
 
   @Input() message: string;
 
-  @Input() overContent: boolean = false;
+  @Input() overContent = false;
 
   ngOnInit() {
   }

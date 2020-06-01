@@ -1,7 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ViewCardService } from '../services/view-card.service';
-import { MarvelCard } from 'src/app/models/marvelcard.interface';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute
+} from '@angular/router';
+import {
+  ViewCardService
+} from '../services/view-card.service';
+import {
+  MarvelCard
+} from 'src/app/models/marvelcard.interface';
 
 
 
@@ -13,13 +22,16 @@ import { MarvelCard } from 'src/app/models/marvelcard.interface';
 export class ViewCardComponent implements OnInit {
   card$: MarvelCard;
   loading = true;
-  constructor(private route: ActivatedRoute, viewCardService: ViewCardService) { 
+  constructor(private route: ActivatedRoute, viewCardService: ViewCardService) {
     const id = this.route.snapshot.params['id'];
     viewCardService.getCard(id).subscribe({
-      next: data => {this.card$ = data; this.loading = false;},
+      next: data => {
+        this.card$ = data;
+        this.loading = false;
+      },
       error: error => console.log(error),
-      complete: ()=> console.log('completed')
-    })
+      complete: () => console.log('completed')
+    });
   }
 
   ngOnInit() {

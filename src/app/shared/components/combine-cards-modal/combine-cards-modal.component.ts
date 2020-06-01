@@ -1,7 +1,19 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CardsListService } from 'src/app/card-manager/services/cards-list.service';
-import { map } from 'rxjs/operators';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  Input
+} from '@angular/core';
+import {
+  NgbActiveModal
+} from '@ng-bootstrap/ng-bootstrap';
+import {
+  CardsListService
+} from 'src/app/card-manager/services/cards-list.service';
+import {
+  map
+} from 'rxjs/operators';
 
 
 @Component({
@@ -15,40 +27,39 @@ export class CombineCardsModalComponent implements OnInit {
   public combineWithCard: string;
 
   @Output()
-  public selectedCards: EventEmitter<string> = new EventEmitter();
+  public selectedCards: EventEmitter < string > = new EventEmitter();
 
-  cardList=[];
+  cardList = [];
   loading = true;
 
 
   constructor(private activeModal: NgbActiveModal, private readonly cardService: CardsListService) {
 
-      this.cardService.getCardList()
+    this.cardService.getCardList()
       .pipe(
         map(card => card.filter(card => card.cardtype === 'single'))
       )
       .subscribe({
         next: data => {
-          this.cardList = data; 
-          this.loading = false; 
-          console.log('thelist: ' ,this.cardList)},
+          this.cardList = data;
+          this.loading = false;
+        },
         error: error => console.log('error', error),
-        complete: ()=> console.log()
+        complete: () => console.log()
       });
   }
 
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   joinCombinations(): string {
     const values = [];
-    this.cardList.map( card => {
-          if (card.selected) {
-            values.push(card.name)
-          }
+    this.cardList.map(card => {
+      if (card.selected) {
+        values.push(card.name)
+      }
     });
-   return values.toString()
+    return values.toString()
   }
 
   public confirm(): void {
