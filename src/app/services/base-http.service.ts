@@ -20,14 +20,14 @@ export abstract class BaseHttpService {
 
   constructor(protected readonly httpClient: HttpClient) {}
 
-  protected get < TResult >(url: string, params?: any): Observable < TResult > {
+  get < TResult >(url: string, params?: any): Observable < TResult > {
     return this.httpClient
       .get < TResult > (this.baseURL + url, {
         headers: this.headers
       });
   }
 
-  protected put < TResult >(
+   put < TResult >(
     url: string,
     params: any,
     options ?: {
@@ -40,7 +40,7 @@ export abstract class BaseHttpService {
 
   }
 
-  protected post < TResult >(
+  post < TResult >(
     params: any,
     options ?: {
       headers: HttpHeaders
@@ -51,7 +51,7 @@ export abstract class BaseHttpService {
       });
   }
 
-  protected postImages < TResult >(
+  postImages < TResult >(
     params: any,
     options ?: {
       headers: HttpHeaders
@@ -60,7 +60,7 @@ export abstract class BaseHttpService {
       .post < TResult > ('http://thepixelhand.ca/projects/marvelcards/backend/include.php?type=item', params);
   }
 
-  protected delete < TResult >(
+  delete < TResult >(
     url: string,
     options ?: {
       headers: HttpHeaders

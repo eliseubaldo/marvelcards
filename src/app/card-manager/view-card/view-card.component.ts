@@ -22,9 +22,16 @@ import {
 export class ViewCardComponent implements OnInit {
   card$: MarvelCard;
   loading = true;
-  constructor(private route: ActivatedRoute, viewCardService: ViewCardService) {
-    const id = this.route.snapshot.params['id'];
-    viewCardService.getCard(id).subscribe({
+  constructor(private route: ActivatedRoute, private viewCardService: ViewCardService) {
+   
+  }
+
+  ngOnInit() {
+    let id;
+    this.route.params.subscribe(params => {
+      id = params.id;   
+    });
+    this.viewCardService.getCard(id).subscribe({
       next: data => {
         this.card$ = data;
         this.loading = false;
@@ -32,10 +39,6 @@ export class ViewCardComponent implements OnInit {
       error: error => console.log(error),
       complete: () => console.log('completed')
     });
-  }
-
-  ngOnInit() {
-    // https://www.thepixelhand.ca/projects/marvelcards/db-images/marvel-cards/s1_001_b.jpg
   }
 
 }

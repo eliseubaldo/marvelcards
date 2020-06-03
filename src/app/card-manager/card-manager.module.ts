@@ -26,14 +26,12 @@ import {
   ReactiveFormsModule,
   FormsModule
 } from '@angular/forms';
-import {
-  AddCardComponent
-} from './add-card/add-card.component';
+
 
 
 
 @NgModule({
-  declarations: [CardManagerComponent, CardListComponent, ViewCardComponent, EditCardComponent, AddCardComponent],
+  declarations: [CardManagerComponent, CardListComponent, ViewCardComponent, EditCardComponent],
   imports: [
     CommonModule,
     CardManagerRoutingModule,

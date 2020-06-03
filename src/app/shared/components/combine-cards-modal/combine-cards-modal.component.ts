@@ -35,6 +35,13 @@ export class CombineCardsModalComponent implements OnInit {
 
   constructor(private activeModal: NgbActiveModal, private readonly cardService: CardsListService) {
 
+    this.loadCards();
+  }
+
+
+  ngOnInit() {}
+
+  loadCards(): void {
     this.cardService.getCardList()
       .pipe(
         map(card => card.filter(card => card.cardtype === 'single'))
@@ -48,9 +55,6 @@ export class CombineCardsModalComponent implements OnInit {
         complete: () => console.log()
       });
   }
-
-
-  ngOnInit() {}
 
   joinCombinations(): string {
     const values = [];

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardManagerComponent } from './card-manager.component';
+import { SharedModule } from '../shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CardManagerComponent', () => {
   let component: CardManagerComponent;
@@ -8,7 +10,8 @@ describe('CardManagerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CardManagerComponent ]
+      declarations: [ CardManagerComponent ],
+      imports: [SharedModule, RouterTestingModule]
     })
     .compileComponents();
   }));

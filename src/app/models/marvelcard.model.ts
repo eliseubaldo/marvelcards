@@ -10,7 +10,7 @@ export class MarvelCard {
     const affiliation = card.affiliation ? card.affiliation : undefined;
     const imagefront = card.imagefront ? card.imagefront : undefined;
     const imageback = card.imageback ? card.imageback : undefined;
-    const id = card.id ? card.id : undefined;
+    const id = card._id ? card._id : undefined;
     return new MarvelCard(
       name,
       attack,
@@ -50,6 +50,6 @@ export class MarvelCard {
     public affiliation: string,
     public imagefront: string,
     public imageback: string,
-    public id: string,
+    public _id: string,
   ) {}
 }

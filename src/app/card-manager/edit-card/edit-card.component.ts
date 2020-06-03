@@ -59,12 +59,23 @@ export class EditCardComponent implements OnInit {
     public toastService: ToastService,
     private readonly modalService: NgbModal,
   ) {
-    const id = this.route.snapshot.params['id'];
+   
+    
+  }
+
+  ngOnInit() {
+
+    let id;
+    this.route.params.subscribe(params => {
+      id = params.id;   
+    });
+    console.log('passou');
     this.route.url.subscribe({
       next: route => {
         this.pageMode = route[0].path;
       }
     });
+
     if (id) {
       this.viewCardService.getCard(id).subscribe({
         next: data => {
@@ -80,8 +91,6 @@ export class EditCardComponent implements OnInit {
       this.loading = false;
     }
   }
-
-  ngOnInit() {}
 
   populateForm(cardData?: MarvelCard): void {
     if (cardData) {

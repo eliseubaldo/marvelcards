@@ -16,10 +16,13 @@ describe('PaginationComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PaginationComponent);
     component = fixture.componentInstance;
+    component.totalCount = 50;
+    component.amountPerPage = 10;
     fixture.detectChanges();
   });
 
   it('should create', () => {
+
     expect(component).toBeTruthy();
   });
 });
